@@ -10,9 +10,14 @@ fun main(args: Array<String>) {
   with(ScriptEngineManager().getEngineByExtension("kts")) {
     print(":) ")
     `in`.reader().forEachLine {
-      for (batch in eval("ndjson.execute($it)") as List<List<JsonNode>>) {
-        batch.forEach(::println)
-        println()
+      try {
+        for (batch in eval("ndjson.execute($it)") as List<List<JsonNode>>) {
+          batch.forEach(::println)
+          println()
+        }
+      } catch (e: RuntimeException) {
+        println(e)
+        println("See https://github.com/demidko/analyze")
       }
       print(":) ")
     }
