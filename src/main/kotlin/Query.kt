@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jsonMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.File
 
 typealias Query = (MutableList<JsonNode>, JsonNode) -> Unit
@@ -74,6 +75,10 @@ private val json = jsonMapper {
 }
 
 fun File.execute(vararg queries: Query): List<MutableList<JsonNode>> {
+  bufferedReader().apply {
+    json.readValue(this)
+  }
+
   val results = queries.map { it to mutableListOf<JsonNode>() }
   forEachLine {
     val node = json.readTree(it)

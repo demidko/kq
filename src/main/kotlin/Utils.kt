@@ -1,7 +1,10 @@
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.jsonMapper
 import com.github.sisyphsu.dateparser.DateParser
 import com.github.sisyphsu.dateparser.DateParserUtils
 import com.github.sisyphsu.dateparser.DateParserUtils.parseDateTime
+import java.io.File
 import java.time.Duration
 import java.time.Duration.between
 import java.time.LocalDateTime
@@ -48,3 +51,16 @@ infix fun <T : Comparable<T>> Predicate.min(field: JsonNode.() -> T) = order(com
 infix fun <T : Comparable<T>> Action.min(field: JsonNode.() -> T) = order(comparing(field).reversed())
 
 fun <T : Comparable<T>> min(field: JsonNode.() -> T) = order(comparing(field).reversed())
+
+
+
+/*fun File.readNdJson(): List<JsonNode> {
+  val json = jsonMapper { addModule(JavaTimeModule()) }
+  val x = this.useLines {
+
+  }
+
+  val reader = bufferedReader()
+
+  json.readT
+}*/
