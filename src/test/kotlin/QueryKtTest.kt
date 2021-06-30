@@ -3,7 +3,6 @@ import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import java.io.File
-import java.time.Duration.between
 
 
 class QueryKtTest {
@@ -18,8 +17,8 @@ class QueryKtTest {
     val (topBySize, topByDuration) = ndjson.execute(
       where { !bool("muted") }
         top 3,
-        max { long("size") }
-      max { between(time("start"), time("finish")) }
+      max { long("size") }
+        max { time("start") to time("finish") }
         top 5
     )
     assertThat(
@@ -32,7 +31,7 @@ class QueryKtTest {
     )
     assertThat(
       topByDuration.first().time("finish"),
-      equalTo(parseDateTime("2021-06-24T14:10:52"))
+      equalTo(parseDateTime("2021-06-24T14:10:52+10:00"))
     )
   }
 }

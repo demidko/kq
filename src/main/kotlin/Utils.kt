@@ -1,10 +1,15 @@
 import com.fasterxml.jackson.databind.JsonNode
+import com.github.sisyphsu.dateparser.DateParser
 import com.github.sisyphsu.dateparser.DateParserUtils
+import com.github.sisyphsu.dateparser.DateParserUtils.parseDateTime
+import java.time.Duration
+import java.time.Duration.between
+import java.time.LocalDateTime
 import java.util.Comparator.comparing
 
 infix fun JsonNode.string(field: String) = get(field).asText()
 
-infix fun JsonNode.time(field: String) = DateParserUtils.parseDateTime(string(field))
+infix fun JsonNode.time(field: String) = parseDateTime(string(field))
 
 infix fun JsonNode.double(field: String) = get(field).asDouble()
 
@@ -16,7 +21,13 @@ infix fun JsonNode.bool(field: String) = get(field).asBoolean()
 
 infix fun JsonNode.string(field: Int) = get(field).asText()
 
-infix fun JsonNode.time(field: Int) = DateParserUtils.parseDateTime(string(field))
+infix fun JsonNode.get(field: Int) = get(field)
+
+infix fun JsonNode.get(field: String) = get(field)
+
+infix fun LocalDateTime.to(to: LocalDateTime) = between(this, to)
+
+infix fun JsonNode.time(field: Int) = parseDateTime(string(field))
 
 infix fun JsonNode.double(field: Int) = get(field).asDouble()
 

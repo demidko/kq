@@ -23,11 +23,14 @@ top(5)
  where { !bool("active") }
   min { int("some") },
 
+top 5
+ min { time("first") to time("last") },
+
 where { get("arr") int(0) > 5 },
 
 where { !get("broken") }
  top 3
-  min { get(4).get("nested") bool("flag") }
+  min { get(4) get("nested") bool("flag") }
 ```
 
 Enjoy results!
@@ -41,12 +44,12 @@ where { /* logic expression */ }
 order { /* expression for comparator */ }
 min { /* expression for comparator key */ }
 max { /* expression for reversed comparator key */ }
+top(limit: Int)
 ```
 
 2. Inside the expressions, you can use Kotlin with json helpers.
 
 ```kotlin
-top(limit: Int)
 get(name: String)
 get(idx: String)
 bool(name: String)
