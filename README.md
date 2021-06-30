@@ -16,21 +16,21 @@ java -jar analyze file.ndjson
 
 ```kotlin
 max { long("size") }
- top 3
-  where { bool("active") },
+top 3
+where { bool("active") },
 
 top(5)
- where { !bool("active") }
-  min { int("some") },
+where { !bool("active") }
+min { int("some") },
 
 top 5
- min { time("first") to time("last") },
+min { time("first") to time("last") },
 
-where { get("arr") int(0) > 5 },
+where { get("arr") int (0) > 5 },
 
 where { !get("broken") }
- top 3
-  min { get(4) get("nested") bool("flag") }
+top 3
+min { get(4) get ("nested") bool ("flag") }
 ```
 
 Enjoy results!
@@ -66,8 +66,19 @@ time(idx: String)
 
 3. You can combine queries separated by commas in any order.
 
-## Build with Gradle
+## Download with Docker
 
-Execute `./gradlew clean build`. Your jar will be located at `./build/libs`.
+Run container with your host's directory:
+
+```shell
+docker run -v your_host_dir:/opt -it demidko/analyze
+```
+
+Then start analysis:
+
+```shell
+analyze your_host_file.ndjson
+```
+
 
 
