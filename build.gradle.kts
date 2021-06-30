@@ -6,6 +6,9 @@ plugins {
   id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 dependencies {
+  implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:1.5.20")
+  implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:1.5.20")
+
   runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
   implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
   implementation("com.github.sisyphsu:dateparser:1.0.7")

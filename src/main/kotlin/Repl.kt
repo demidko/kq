@@ -1,24 +1,36 @@
 import com.fasterxml.jackson.databind.JsonNode
-import java.io.File
-import java.lang.System.`in`
+import java.lang.Thread.currentThread
 import javax.script.ScriptEngineManager
+import javax.script.ScriptException
 
 fun main(args: Array<String>) {
-  check(args.size == 1) { "Invalid args. The utility only accepts one file path." }
-  val cache = File(args.first()).ndjson()
-  with(ScriptEngineManager().getEngineByExtension("kts")) {
-    print(":) ")
-    `in`.reader().forEachLine {
-      try {
+
+  check(args.size == 1) {
+    "Invalid args. The utility only accepts one file path."
+  }
+
+  val kotlin = ScriptEngineManager().getEngineByExtension("kts").apply {
+    eval("val cache = java.io.File(\"${args.first()}\").ndjson()")
+  }
+
+  fun execute(q: String) =
+    (kotlin.eval("cache.collect($q)") as List<List<JsonNode>>)
+      .forEach {
+        it.forEach(::println)
         println()
-        for (batch in eval("cache.collect($it)") as List<List<JsonNode>>) {
-          batch.forEach(::println)
-          println()
-        }
-      } catch (e: RuntimeException) {
-        println(e)
       }
-      print(":) ")
+
+  while (!currentThread().isInterrupted) {
+    print("kts :) ")
+    try {
+      when (val q = readLine()) {
+        null, ":q" -> return
+        else -> execute(q)
+      }
+    } catch (e: RuntimeException) {
+      println(e)
+    } catch (e: ScriptException) {
+      println(e)
     }
   }
 }

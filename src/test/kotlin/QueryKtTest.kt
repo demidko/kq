@@ -33,7 +33,7 @@ class QueryKtTest {
     )
     assertThat(
       topByDuration.first().time("finish"),
-      equalTo(parseDateTime("2021-06-24T14:10:52+10:00"))
+      equalTo(parseDateTime("2021-06-24T14:08:08+10:00"))
     )
   }
 }

@@ -37,17 +37,17 @@ infix fun JsonNode.int(field: Int) = get(field).asInt()
 
 infix fun JsonNode.bool(field: Int) = get(field).asBoolean()
 
-infix fun <T : Comparable<T>> Predicate.max(field: JsonNode.() -> T) = order(comparing(field))
+infix fun <T : Comparable<T>> Predicate.min(field: JsonNode.() -> T) = order(comparing(field))
 
-infix fun <T : Comparable<T>> Action.max(field: JsonNode.() -> T) = order(comparing(field))
+infix fun <T : Comparable<T>> Action.min(field: JsonNode.() -> T) = order(comparing(field))
 
-fun <T : Comparable<T>> max(field: JsonNode.() -> T) = order(comparing(field))
+fun <T : Comparable<T>> min(field: JsonNode.() -> T) = order(comparing(field))
 
-infix fun <T : Comparable<T>> Predicate.min(field: JsonNode.() -> T) = order(comparing(field).reversed())
+infix fun <T : Comparable<T>> Predicate.max(field: JsonNode.() -> T) = order(comparing(field).reversed())
 
-infix fun <T : Comparable<T>> Action.min(field: JsonNode.() -> T) = order(comparing(field).reversed())
+infix fun <T : Comparable<T>> Action.max(field: JsonNode.() -> T) = order(comparing(field).reversed())
 
-fun <T : Comparable<T>> min(field: JsonNode.() -> T) = order(comparing(field).reversed())
+fun <T : Comparable<T>> max(field: JsonNode.() -> T) = order(comparing(field).reversed())
 
 private val json = jsonMapper { addModule(JavaTimeModule()) }
 
