@@ -17,8 +17,8 @@ class QueryKtTest {
 
     val (topBySize, topByDuration) = ndjson.execute(
       where { !bool("muted") }
-        max { long("size") }
         top 3,
+        max { long("size") }
       max { between(time("start"), time("finish")) }
         top 5
     )
