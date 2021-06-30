@@ -17,7 +17,6 @@ fun main(args: Array<String>) {
         }
       } catch (e: RuntimeException) {
         println(e)
-        println("See https://github.com/demidko/analyze")
       }
       print(":) ")
     }
