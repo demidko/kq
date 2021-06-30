@@ -22,7 +22,6 @@ fun main(args: Array<String>) {
       }
     }
 
-
   while (!currentThread().isInterrupted) {
     print("kts :) ")
     try {
