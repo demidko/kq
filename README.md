@@ -68,7 +68,7 @@ time(idx: String)
 
 ## Download with Docker
 
-Run container with your host's directory:
+Start the container with the desired directory:
 
 ```shell
 docker run -v your_host_dir:/opt -it demidko/analyze
