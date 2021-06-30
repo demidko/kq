@@ -1,22 +1,22 @@
 # Analyze
 
-Command-line JSON processor with Kotlin dsl.
+Modern JSON processor with readable syntax.
 
 ## Usage
 
-1. Start the container with the desired directory:
+Start the container with the desired directory:
 
 ```shell
 docker run -v desired/dir:/opt -it demidko/analyze
 ```
 
-2. To start analysis select your ndjson:
+To start analysis select your ndjson:
 
 ```shell
 analyze file.ndjson
 ```
 
-3. Then enter any queries in any order, separated by commas, for example:
+Then enter any queries in any order, separated by commas, for example:
 
 ```kotlin
 max { long("size") }
@@ -41,7 +41,12 @@ Enjoy results!
 
 ## Documentation
 
-1. You can combine query's control constructs in any order:
+All queries contain control constructs and expressions. You can combine queries separated by commas
+in any order.
+
+### Control constructs
+
+You can combine query's control constructs in any order:
 
 ```kotlin
 where { /* logic expression */ }
@@ -51,7 +56,9 @@ max { /* expression for reversed comparator key */ }
 top(limit: Int)
 ```
 
-2. Inside the expressions, you can use Kotlin with json helpers.
+### Expressions helpers
+
+Inside the expressions, you can use Kotlin with json helpers.
 
 ```kotlin
 get(name: String)
@@ -67,8 +74,6 @@ string(idx: String)
 time(name: String)
 time(idx: String)
 ```
-
-3. You can combine queries separated by commas in any order.
 
 
 
