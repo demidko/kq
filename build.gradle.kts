@@ -1,32 +1,36 @@
 repositories {
   mavenCentral()
-  maven("https://jitpack.io")
 }
 plugins {
-  kotlin("jvm") version "1.5.10"
+  kotlin("jvm") version "1.5.20"
   id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 dependencies {
-  implementation("io.ktor:ktor-server-netty:1.6.0")
-  implementation("io.ktor:ktor-client-cio:1.6.0")
-  implementation("org.redisson:redisson:3.15.6")
-  implementation("co.touchlab:stately-isolate-jvm:1.1.7-a1")
-  implementation("ch.qos.logback:logback-classic:1.3.0-alpha5")
-  testImplementation("org.junit.jupiter:junit-jupiter:5.8.0-M1")
+  runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
+  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
+  implementation("com.github.sisyphsu:dateparser:1.0.7")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
   testImplementation("com.natpryce:hamkrest:1.8.0.1")
-  testImplementation("io.mockk:mockk:1.11.0")
 }
 tasks.compileKotlin {
-  kotlinOptions.jvmTarget = "16"
+  kotlinOptions.jvmTarget = "11"
   kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
 }
 tasks.compileTestKotlin {
-  kotlinOptions.jvmTarget = "16"
+  kotlinOptions.jvmTarget = "11"
   kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
 }
 tasks.test {
   useJUnitPlatform()
 }
 tasks.jar {
-  manifest.attributes("Main-Class" to "AppKt")
+  manifest.attributes("Main-Class" to "ReplKt")
+}
+tasks.shadowJar {
+  isZip64 = true
+  minimize()
+}
+tasks.build {
+  dependsOn(tasks.shadowJar)
 }

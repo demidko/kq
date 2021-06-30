@@ -1,18 +1,25 @@
-## Service
+# Analyze
 
-Kotlin microservice template produces self-executable jar application. For brevity, double-space
-formatting is used. [`Ktor`](https://ktor.io/) is included to mock Digital Ocean healthy checks.
+Command-line JSON processor with Kotlin dsl.
 
-### Usage
+## Usage
 
-Make sure you are signed in to your GitHub account, then just
-click [`here`](https://github.com/demidko/service/generate) to use template.
+You need [jdk16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.  
+Select your ndjson:
 
-### Build
+```shell
+java -jar analyze file.ndjson
+```
 
-Execute `./gradlew clean test shadowJar`. Your jar will be located at `./build/libs`.
+Enter any queries, for example:
 
-### Deploy
+```kotlin
+:) max { long("size") } top 3 where { bool("active") }, top 5 where { !bool("active") }
+:) top 3 
+```
 
-[![Deploy to DO](https://www.deploytodo.com/do-btn-blue-ghost.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/demidko/service/tree/main)
+## Build
+
+Execute `./gradlew clean build`. Your jar will be located at `./build/libs`.
+
 
