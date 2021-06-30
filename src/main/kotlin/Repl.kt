@@ -14,11 +14,14 @@ fun main(args: Array<String>) {
   }
 
   fun execute(q: String) =
-    (kotlin.eval("cache.collect($q)") as List<List<JsonNode>>)
-      .forEach {
+    (kotlin.eval("cache.collect($q)") as List<List<JsonNode>>).apply {
+      println()
+      forEach {
         it.forEach(::println)
         println()
       }
+    }
+
 
   while (!currentThread().isInterrupted) {
     print("kts :) ")
