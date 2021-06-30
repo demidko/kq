@@ -13,14 +13,16 @@ class QueryKtTest {
       .getResource("/example.ndjson")!!
       .toURI()
       .let(::File)
+      .let(File::ndjson)
 
-    val (topBySize, topByDuration) = ndjson.execute(
+    val (topBySize, topByDuration) = ndjson.collect(
       where { !bool("muted") }
         top 3,
       max { long("size") }
         max { time("start") to time("finish") }
         top 5
     )
+
     assertThat(
       topBySize.size,
       equalTo(3)
