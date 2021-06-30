@@ -2,17 +2,21 @@
 
 Command-line JSON processor with Kotlin dsl.
 
-## Usage example
+## Usage
 
-You need [jdk16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.
-
-1. Select your ndjson:
+1. Start the container with the desired directory:
 
 ```shell
-java -jar analyze file.ndjson
+docker run -v desired/dir:/opt -it demidko/analyze
 ```
 
-2. Enter any queries in any order, separated by commas, for example:
+2. To start analysis select your ndjson:
+
+```shell
+analyze file.ndjson
+```
+
+3. Then enter any queries in any order, separated by commas, for example:
 
 ```kotlin
 max { long("size") }
@@ -35,7 +39,7 @@ min { get(4) get ("nested") bool ("flag") }
 
 Enjoy results!
 
-## Language documentation
+## Documentation
 
 1. You can combine query's control constructs in any order:
 
@@ -65,20 +69,6 @@ time(idx: String)
 ```
 
 3. You can combine queries separated by commas in any order.
-
-## Download with Docker
-
-Start the container with the desired directory:
-
-```shell
-docker run -v desired/dir:/opt -it demidko/analyze
-```
-
-Then start analysis desired ndjson file:
-
-```shell
-analyze desired.ndjson
-```
 
 
 
