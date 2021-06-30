@@ -71,13 +71,13 @@ time(idx: String)
 Start the container with the desired directory:
 
 ```shell
-docker run -v desired_dir:/opt -it demidko/analyze
+docker run -v desired/dir:/opt -it demidko/analyze
 ```
 
-Then start analysis:
+Then start analysis desired ndjson file:
 
 ```shell
-analyze your_host_file.ndjson
+analyze desired.ndjson
 ```
 
 
