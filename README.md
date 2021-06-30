@@ -71,7 +71,7 @@ time(idx: String)
 Start the container with the desired directory:
 
 ```shell
-docker run -v your_host_dir:/opt -it demidko/analyze
+docker run -v desired_dir:/opt -it demidko/analyze
 ```
 
 Then start analysis:
