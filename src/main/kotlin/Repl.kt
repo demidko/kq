@@ -4,6 +4,9 @@ import java.lang.System.`in`
 import javax.script.ScriptEngineManager
 
 fun main(args: Array<String>) {
+
+  ScriptEngineManager().getEngineByExtension("kts").eval("print(8)")
+
   check(args.size == 1) { "Invalid args. Еhe utility only accepts one file path." }
   val ndjson = File(args.first())
   check(ndjson.exists()) { "$ndjson not found" }
@@ -23,3 +26,5 @@ fun main(args: Array<String>) {
     }
   }
 }
+
+

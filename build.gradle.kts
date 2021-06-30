@@ -6,7 +6,17 @@ plugins {
   id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 dependencies {
-  runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
+
+  implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.5.20")
+  implementation("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.5.20")
+  implementation("org.jetbrains.kotlin:kotlin-script-util:1.5.20")
+  implementation("org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.5.20")
+  implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.20")
+  implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:1.5.20")
+  implementation("org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.5.20")
+  implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:1.5.20")
+  implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
+
   implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
   implementation("com.github.sisyphsu:dateparser:1.0.7")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3")
@@ -14,11 +24,11 @@ dependencies {
   testImplementation("com.natpryce:hamkrest:1.8.0.1")
 }
 tasks.compileKotlin {
-  kotlinOptions.jvmTarget = "11"
+  kotlinOptions.jvmTarget = "16"
   kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
 }
 tasks.compileTestKotlin {
-  kotlinOptions.jvmTarget = "11"
+  kotlinOptions.jvmTarget = "16"
   kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
 }
 tasks.test {
