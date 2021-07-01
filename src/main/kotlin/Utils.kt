@@ -51,4 +51,14 @@ fun <T : Comparable<T>> max(field: JsonNode.() -> T) = order(comparing(field).re
 
 private val json = jsonMapper { addModule(JavaTimeModule()) }
 
-fun File.ndjson() = useLines { it.map(json::readTree).toList() }
+fun File.ndjson(): List<JsonNode> = when (isDirectory) {
+
+  true -> listFiles { it: File -> it.extension == "ndjson" || it.extension == "json" }
+    ?.flatMap(File::ndjson)
+    ?: emptyList()
+
+  else -> useLines {
+    it.map(json::readTree).toList()
+  }
+}
+

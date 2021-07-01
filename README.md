@@ -4,40 +4,28 @@ Modern JSON processor with readable syntax.
 
 ## Usage
 
-Start the container with the desired directory:
+Start the container with the desired directory and file, for example, `~/Desktop` directory
+and `example.ndjson` file:
 
 ```shell
-docker run -v desired/dir:/opt -it demidko/analyze
-```
-
-To start analysis select your ndjson:
-
-```shell
-analyze file.ndjson
+docker run -v ~/Desktop:/opt -it demidko/analyze example.ndjson
 ```
 
 Then enter any queries in any order, separated by commas, for example:
 
 ```kotlin
-max { long("size") }
- top 3
-  where { bool("active") },
+max { long("size") } top 3 where { bool("active") },
 
-top(5)
- where { !bool("active") }
-  min { int("some") },
+top(5) where { !bool("active") } min { int("some") },
 
-top 5
- min { time("first") to time("last") },
+top 5 min { time("first") to time("last") },
 
 where { get("arr") int (0) > 5 },
 
-where { !get("broken") }
- top 3
-  min { get(4) get ("nested") bool ("flag") }
+where { !get("broken") } top 3 min { get(4) get ("nested") bool ("flag") }
 ```
 
-Enjoy results!
+Enjoy results! Use :q to exit.
 
 ## Documentation
 
