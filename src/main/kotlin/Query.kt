@@ -1,77 +1,92 @@
 import com.fasterxml.jackson.databind.JsonNode
 
-typealias Query = (MutableList<JsonNode>, JsonNode) -> Unit
-
-class Predicate(val predicate: MutableList<JsonNode>.(JsonNode) -> Boolean) :
-  Query by { list, el ->
-    list.predicate(el)
-  }
-
-class Action(val action: MutableList<JsonNode>.(JsonNode) -> Unit) :
-  Query by { list, el ->
-    list.action(el)
-  }
-
-fun top(limit: Int) = Action {
-  if (size < limit) {
-    add(it)
-  }
+interface Query {
+  fun apply(list: MutableList<JsonNode>, el: JsonNode)
+  fun build(list: List<JsonNode>): List<Any>
 }
 
-infix fun Predicate.top(limit: Int) = Action {
-  if (size < limit && predicate(it)) {
-    add(it)
-  }
+interface Mapper : Query {
+
+  override fun build(list: List<JsonNode>) = map(list)
+
+  fun map(list: List<Any>): List<Any>
 }
 
-infix fun Action.top(limit: Int) = Action {
-  action(it)
-  while (size > limit) {
-    removeLast()
+fun interface Mixer : Query {
+  override fun build(list: List<JsonNode>) = list
+}
+
+fun map(mapper: JsonNode.() -> Any) = object : Mapper {
+
+  override fun map(list: List<Any>) = (list as List<JsonNode>).map(mapper)
+
+  override fun apply(list: MutableList<JsonNode>, el: JsonNode) {
+    list.add(el)
   }
 }
 
-fun where(filter: JsonNode.() -> Boolean) = Action {
-  if (it.filter()) {
-    add(it)
+infix fun Mapper.map(mapper: Any.() -> Any) = object: Mapper {
+  override fun apply(list: MutableList<JsonNode>, el: JsonNode) {
+    TODO("Not yet implemented")
   }
 }
 
-infix fun Action.where(filter: JsonNode.() -> Boolean) = Action {
-  if (it.filter()) {
-    action(it)
+
+{
+  map(it).map(mapper)
+}
+
+infix fun Mixer.map(mapper: JsonNode.() -> Any) = Mapper {
+  build(it as List<JsonNode>).map(mapper)
+}
+
+fun top(limit: Int) = Mixer { list, el ->
+  if (list.size < limit) {
+    list.add(el)
   }
 }
 
-infix fun Predicate.where(filter: JsonNode.() -> Boolean) = Action {
-  if (predicate(it) && it.filter()) {
-    add(it)
+infix fun Mixer.top(limit: Int) = Mixer { list, el ->
+  apply(list, el)
+  while (list.size > limit) {
+    list.removeLast()
   }
 }
 
-fun order(comparator: Comparator<JsonNode>) = Action {
-  add(it)
-  sortWith(comparator)
-}
+infix fun Mapper.top(limit: Int) = Mapper { map(it).take(limit) }
 
-infix fun Action.order(comparator: Comparator<JsonNode>) = Action {
-  action(it)
-  sortWith(comparator)
-}
-
-infix fun Predicate.order(comparator: Comparator<JsonNode>) = Action {
-  if (predicate(it)) {
-    add(it)
-    sortWith(comparator)
+fun where(filter: JsonNode.() -> Boolean) = Mixer { list, el ->
+  if (el.filter()) {
+    list.add(el)
   }
 }
 
-fun List<JsonNode>.collect(vararg queries: Query): List<MutableList<JsonNode>> {
+infix fun Mixer.where(filter: JsonNode.() -> Boolean) = Mixer { list, el ->
+  if (el.filter()) {
+    apply(list, el)
+  }
+}
+
+infix fun Mapper.where(f: Any.() -> Boolean) = Mapper { it.filter(f) }
+
+fun order(comparator: Comparator<JsonNode>) = Mixer { list, el ->
+  list.add(el)
+  list.sortWith(comparator)
+}
+
+infix fun Mixer.order(comparator: Comparator<JsonNode>) = Mixer { list, el ->
+  apply(list, el)
+  list.sortWith(comparator)
+}
+
+fun List<JsonNode>.collect(vararg queries: Query): List<List<Any>> {
   val results = queries.map { it to mutableListOf<JsonNode>() }
   for (node in this) {
     for ((query, result) in results) {
-      query(result, node)
+      query.apply(result, node)
     }
   }
-  return results.map { it.second }
+  return results.map { (query, result) ->
+    query.build(result)
+  }
 }

@@ -37,28 +37,32 @@ infix fun JsonNode.int(field: Int) = get(field).asInt()
 
 infix fun JsonNode.bool(field: Int) = get(field).asBoolean()
 
-infix fun <T : Comparable<T>> Predicate.min(field: JsonNode.() -> T) = order(comparing(field))
-
-infix fun <T : Comparable<T>> Action.min(field: JsonNode.() -> T) = order(comparing(field))
+infix fun <T : Comparable<T>> Mixer.min(field: JsonNode.() -> T) = order(comparing(field))
 
 fun <T : Comparable<T>> min(field: JsonNode.() -> T) = order(comparing(field))
 
-infix fun <T : Comparable<T>> Predicate.max(field: JsonNode.() -> T) = order(comparing(field).reversed())
-
-infix fun <T : Comparable<T>> Action.max(field: JsonNode.() -> T) = order(comparing(field).reversed())
+infix fun <T : Comparable<T>> Mixer.max(field: JsonNode.() -> T) = order(comparing(field).reversed())
 
 fun <T : Comparable<T>> max(field: JsonNode.() -> T) = order(comparing(field).reversed())
 
 private val json = jsonMapper { addModule(JavaTimeModule()) }
 
 fun File.ndjson(): List<JsonNode> = when (isDirectory) {
-
   true -> listFiles { it: File -> it.extension == "ndjson" || it.extension == "json" }
     ?.flatMap(File::ndjson)
     ?: emptyList()
-
   else -> useLines {
     it.map(json::readTree).toList()
+  }
+}
+
+fun List<Any>.prinltn() = forEach(::println)
+
+fun List<List<Any>>.println() {
+  println()
+  forEach {
+    it.prinltn()
+    println()
   }
 }
 
