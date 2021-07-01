@@ -4,8 +4,8 @@ Modern JSON processor with readable syntax.
 
 ## Usage
 
-Start the container with the desired directory and file, for example, `~/Desktop` directory
-and `example.ndjson` file:
+You need [Docker](https://www.docker.com/) installed. Start the container with the desired directory
+and file, for example, `~/Desktop` directory and `example.ndjson` file:
 
 ```shell
 docker run -v ~/Desktop:/opt -it demidko/analyze example.ndjson
@@ -25,7 +25,7 @@ where { get("arr") int (0) > 5 },
 where { !get("broken") } top 3 min { get(4) get ("nested") bool ("flag") }
 ```
 
-Enjoy results! Use :q to exit.
+Enjoy results! Use `:q` to exit.
 
 ## Documentation
 
