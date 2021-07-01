@@ -49,18 +49,18 @@ top(limit: Int)
 Inside the expressions, you can use Kotlin with json helpers.
 
 ```kotlin
-get(name: String)
-get(idx: String)
+get(name: String) // get node
+get(idx: Int) // get node
 bool(name: String)
-bool(idx: String)
+bool(idx: Int)
 int(name: String)
-int(idx: String)
+int(idx: Int)
 double(name: String)
-double(idx: String)
+double(idx: Int)
 string(name: String)
-string(idx: String)
+string(idx: Int)
 time(name: String)
-time(idx: String)
+time(idx: Int)
 ```
 
 

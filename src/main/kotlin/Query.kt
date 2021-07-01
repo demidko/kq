@@ -1,5 +1,4 @@
 import com.fasterxml.jackson.databind.JsonNode
-import javax.script.ScriptEngine
 
 typealias Query = (MutableList<JsonNode>, JsonNode) -> Unit
 
