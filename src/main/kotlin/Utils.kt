@@ -37,13 +37,19 @@ infix fun JsonNode.int(field: Int) = get(field).asInt()
 
 infix fun JsonNode.bool(field: Int) = get(field).asBoolean()
 
-infix fun <T : Comparable<T>> Mixer.min(field: JsonNode.() -> T) = order(comparing(field))
+
+infix fun <T : Comparable<T>> JsonQuery.min(field: JsonNode.() -> T) = order(comparing(field))
+
+infix fun <T : Comparable<T>> JsonQuery.max(field: JsonNode.() -> T) = order(comparing(field).reversed())
+
+infix fun <T : Comparable<T>> AnyQuery.min(field: Any.() -> T) = order(comparing(field))
+
+infix fun <T : Comparable<T>> AnyQuery.max(field: Any.() -> T) = order(comparing(field).reversed())
 
 fun <T : Comparable<T>> min(field: JsonNode.() -> T) = order(comparing(field))
 
-infix fun <T : Comparable<T>> Mixer.max(field: JsonNode.() -> T) = order(comparing(field).reversed())
-
 fun <T : Comparable<T>> max(field: JsonNode.() -> T) = order(comparing(field).reversed())
+
 
 private val json = jsonMapper { addModule(JavaTimeModule()) }
 
@@ -56,12 +62,10 @@ fun File.ndjson(): List<JsonNode> = when (isDirectory) {
   }
 }
 
-fun List<Any>.prinltn() = forEach(::println)
-
 fun List<List<Any>>.println() {
   println()
   forEach {
-    it.prinltn()
+    it.forEach(::println)
     println()
   }
 }

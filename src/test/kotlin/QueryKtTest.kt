@@ -8,15 +8,27 @@ import java.io.File
 
 class QueryKtTest {
 
-  @Test
-  fun analyze() {
-    val ndjson = javaClass
+  private val ndjson =
+    javaClass
       .getResource("/example.ndjson")!!
       .toURI()
       .let(::File)
       .let(File::ndjson)
 
-    val (topBySize, topByDuration, tsv) = ndjson.collect(
+  @Test
+  fun select() {
+    val tsv = ndjson.collect(
+      where { long("size") < 10 }
+        map { "${get("size")}\t${get("id")}" }
+    )
+    tsv.println()
+  }
+
+  @Test
+  fun analyze() {
+
+
+    val (topBySize, topByDuration) = ndjson.collect(
 
       where { !bool("muted") }
         top 3,
@@ -24,11 +36,7 @@ class QueryKtTest {
       max { long("size") }
         max { time("start") to time("finish") }
         top 5,
-
-      where { long("size") < 10 } map { "${get("size")}\t${get("id")}" } top 3
     )
-
-    tsv.prinltn()
 
     assertThat(
       topBySize.size,
