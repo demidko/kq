@@ -2,20 +2,25 @@
 
 Modern cross-platform JSON processor with readable Kotlin syntax.
 
-## Usage with Java
+## Usage
 
-You need java installed. You need [utility](https://github.com/demidko/analyze/releases) installed.
-For example with `example.ndjson` file
-
-```shell
-java -jar analyze example.ndjson 'where{long("size") > 10} max{long("size")} select{int("id")}'
-```
-
-or on Unix
-
-```shell
-cat example.ndjson | analyze 'where{long("size") > 10} max{long("size")} select{int("id")}'
-```
+1. You need [jvm16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.
+1. [Download `analyze.jar`](https://github.com/demidko/analyze/releases).
+1. Now you can run it, for example with `example.ndjson` file
+   ```shell
+   java -jar analyze.jar example.ndjson 'where{long("size") > 10} max{long("size")} select{int("id")}'
+   # or
+   cat example.ndjson | java -jar analyze.jar 'where{long("size") > 10} max{long("size")} select{int("id")}'
+   ```
+1. On Unix you can create command `analyze`:
+   ```shell
+   mv analyze.jar /usr/local/bin/analyze.jar
+   echo "java -jar /usr/local/bin/analyze.jar \$@" > /usr/local/bin/analyze
+   chmod a+x /usr/local/bin/analyze
+   
+   # example
+   analyze example.ndjson 'where{long("size") > 10} max{long("size")} select{int("id")}'
+   ``` 
 
 ## Usage with [Docker](https://www.docker.com/)
 
@@ -109,23 +114,6 @@ example:
 
 ```shell
 cat example.ndjson | java -jar analyze 'where{bool("active")} top 10'
-```
-
-### Build Unix [Java](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) utility
-
-Execute following commands:
-
-```shell
-./gradlew clean build
-mv build/libs/*-all.jar /usr/local/bin/analyze.jar
-echo "java -jar /usr/local/bin/analyze.jar \$@" > /usr/local/bin/analyze
-chmod a+x /usr/local/bin/analyze
-```
-
-Now you can run utility with alias, for example:
-
-```shell
-cat example.ndjson | analyze 'where{bool("active")} top 10'
 ```
 
 ### Build cross-platform utility with [GraalVM](https://www.graalvm.org/reference-manual/native-image/#install-native-image)
