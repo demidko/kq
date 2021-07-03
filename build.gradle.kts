@@ -8,8 +8,8 @@ plugins {
 dependencies {
   runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
   implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
-  implementation("com.github.sisyphsu:dateparser:1.0.7")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3")
+  implementation("com.github.sisyphsu:dateparser:1.0.7")
   testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
   testImplementation("com.natpryce:hamkrest:1.8.0.1")
 }
@@ -25,7 +25,7 @@ tasks.test {
   useJUnitPlatform()
 }
 tasks.jar {
-  manifest.attributes("Main-Class" to "ReplKt")
+  manifest.attributes("Main-Class" to "UtilityKt")
 }
 tasks.shadowJar {
   isZip64 = true
