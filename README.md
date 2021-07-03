@@ -101,7 +101,7 @@ time(idx: Int)
 
 ## Build
 
-### Build Ucatnix command
+### Build Unix command
 
 You need [jvm16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.
 Run `./install.sh`. Now you can run command, for example:
