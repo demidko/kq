@@ -1,11 +1,14 @@
 # Analyze
 
 Modern cross-platform JSON processor with readable Kotlin syntax.
+```shell
+cat ~/Desktop/bdb.ndjson | analyze '.filter{it.bool("muted")}.sortedBy{it.long("size")}.take(7)'
+```
 
 ## Usage
 
 1. You need [jvm16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.
-1. [Download `analyze.jar`](https://github.com/demidko/analyze/releases)
+1. [Download release](https://github.com/demidko/analyze/releases).
 1. Now you can run it, for example with `example.ndjson` file:
    ```shell
    java -jar analyze.jar example.ndjson 'where{long("size") > 10} max{long("size")} select{int("id")}'
@@ -98,7 +101,7 @@ time(idx: Int)
 
 ## Build
 
-### Build Unix command
+### Build Ucatnix command
 
 You need [jvm16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.
 Run `./install.sh`. Now you can run command, for example:
