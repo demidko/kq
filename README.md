@@ -1,6 +1,7 @@
 # Analyze
 
 Modern cross-platform JSON processor with readable Kotlin syntax.
+
 ```shell
 cat ~/Desktop/bdb.ndjson | analyze '.filter{it.bool("muted")}.sortedBy{it.long("size")}.take(7)'
 ```
@@ -50,7 +51,7 @@ Any request contains control constructs and inline expressions.
 
 ### Constructs
 
-You can combine query's control constructs in any order:
+You can use any Kotlin sequence extension and following infix extensions in any order:
 
 ```kotlin
 /* Sequence containing only elements matching the given predicate expression. */
