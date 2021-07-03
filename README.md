@@ -110,7 +110,7 @@ Your jar will be located at `./build/libs` with `-all.jar` postfix. Now you can 
 example:
 
 ```shell
-cat example.ndjson | java -jar analyze 'where{bool("active")} top 10'
+cat example.ndjson | java -jar analyze-all.jar 'where{bool("active")} top 10'
 ```
 
 ### Build [Docker](https://www.docker.com/) image
@@ -140,7 +140,7 @@ Your native utility without runtime dependencies will be located at current dire
 postfix. Now you can run utility, for example:
 
 ```shell
-cat example.ndjson | ./analyze 'where{bool("active")} top 10'
+cat example.ndjson | ./analyze-all 'where{bool("active")} top 10'
 ```
 
 
