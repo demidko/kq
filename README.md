@@ -1,40 +1,40 @@
-# Analyze
+# Kq
 
 Modern cross-platform JSON processor with readable Kotlin syntax.
 
 ```shell
-cat ~/Desktop/bdb.ndjson | analyze '.filter{it.bool("muted")}.sortedBy{it.long("size")}.take(7)'
+cat ~/Desktop/bdb.ndjson | kq '.filter{it.bool("muted")}.sortedBy{it.long("size")}.take(7)'
 ```
 
 ## Usage
 
 1. You need [jvm16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.
-1. [Download release](https://github.com/demidko/analyze/releases).
+1. [Download release](https://github.com/demidko/kq/releases).
 1. Now you can run it, for example with `example.ndjson` file:
    ```shell
-   java -jar analyze.jar example.ndjson 'where{long("size") > 10} max{long("size")} select{int("id")}'
+   java -jar kq.jar example.ndjson 'where{long("size") > 10} max{long("size")} select{int("id")}'
    # or
-   cat example.ndjson | java -jar analyze.jar 'where{long("size") > 10} max{long("size")} select{int("id")}'
+   cat example.ndjson | java -jar kq.jar 'where{long("size") > 10} max{long("size")} select{int("id")}'
    ```
-1. On Unix you can create command `analyze`:
+1. On Unix you can create command `kq`:
    ```shell
-   mv analyze.jar /usr/local/bin/analyze.jar
-   echo "java -jar /usr/local/bin/analyze.jar \$@" > /usr/local/bin/analyze
-   chmod a+x /usr/local/bin/analyze
+   mv kq.jar /usr/local/bin/kq.jar
+   echo "java -jar /usr/local/bin/kq.jar \$@" > /usr/local/bin/kq
+   chmod a+x /usr/local/bin/kq
    ``` 
 
 ## Examples
 
 ```shell
-analyze file.ndsjon 'max {long("size")} top 3 where {bool("active")}'
+kq file.ndsjon 'max {long("size")} top 3 where {bool("active")}'
 
-cat file.ndjson | analyze 'top 5 where{!bool("active")} min{int("some")}'
+cat file.ndjson | kq 'top 5 where{!bool("active")} min{int("some")}'
 
-analyze file.ndsjon 'top 5 min{between(time("first"), time("last"))}'
+kq file.ndsjon 'top 5 min{between(time("first"), time("last"))}'
 
-cat file.ndjson | analyze 'where { obj("arr").int(0) > 5 }'
+cat file.ndjson | kq 'where { obj("arr").int(0) > 5 }'
 
-analyze file.ndsjon 'where{!bool("broken")} top 3 min{ obj(4).obj("nested").bool("flag") }'
+kq file.ndsjon 'where{!bool("broken")} top 3 min{ obj(4).obj("nested").bool("flag") }'
 ```
 
 ## Usage with [Docker](https://www.docker.com/)
@@ -42,7 +42,7 @@ analyze file.ndsjon 'where{!bool("broken")} top 3 min{ obj(4).obj("nested").bool
 Start the container in current directory, for example, with `example.ndjson` file:
 
 ```shell
-docker run -v `pwd`:`pwd` -w `pwd` -it --rm demidko/analyze example.ndjson 'where{bool("active")} max{long("size")} top 10'
+docker run -v `pwd`:`pwd` -w `pwd` -it --rm demidko/kq example.ndjson 'where{bool("active")} max{long("size")} top 10'
 ```
 
 ## Documentation
@@ -108,7 +108,7 @@ You need [jvm16](https://www.oracle.com/java/technologies/javase-jdk16-downloads
 Run `./install.sh`. Now you can run command, for example:
 
 ```shell
-cat example.ndjson | analyze 'where{bool("active")} top 10'
+cat example.ndjson | kq 'where{bool("active")} top 10'
 ```
 
 ### Build [Java](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) utility
@@ -123,7 +123,7 @@ Your jar will be located at `./build/libs` with `-all.jar` postfix. Now you can 
 example:
 
 ```shell
-cat example.ndjson | java -jar analyze-all.jar 'where{bool("active")} top 10'
+cat example.ndjson | java -jar kq-all.jar 'where{bool("active")} top 10'
 ```
 
 ### Build [Docker](https://www.docker.com/) image
@@ -131,13 +131,13 @@ cat example.ndjson | java -jar analyze-all.jar 'where{bool("active")} top 10'
 Execute command
 
 ```shell
-docker build . -t analyze
+docker build . -t kq
 ```
 
 Now you can run container, for example:
 
 ```shell
-docker run -v `pwd`:`pwd` -w `pwd` -it --rm analyze example.ndjson 'where{bool("active")} top 10'
+docker run -v `pwd`:`pwd` -w `pwd` -it --rm kq example.ndjson 'where{bool("active")} top 10'
 ```
 
 ### Build cross-platform utility with [GraalVM](https://www.graalvm.org/reference-manual/native-image/#install-native-image)
@@ -153,7 +153,7 @@ Your native utility without runtime dependencies will be located at current dire
 postfix. Now you can run utility, for example:
 
 ```shell
-cat example.ndjson | ./analyze-all 'where{bool("active")} top 10'
+cat example.ndjson | ./kq-all 'where{bool("active")} top 10'
 ```
 
 

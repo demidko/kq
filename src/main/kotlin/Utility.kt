@@ -42,6 +42,6 @@ fun main(args: Array<String>) {
   when (args.size) {
     1 -> "System.`in`.bufferedReader()".eval(args[0])
     2 -> """java.io.File("${args[0]}")""".eval(args[1])
-    else -> println("Invalid params ${args.toList()}. Usage: analyze [filename] [query]")
+    else -> println("Invalid params ${args.toList()}. Usage: kq [filename] [query]")
   }
 }

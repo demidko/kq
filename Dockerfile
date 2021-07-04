@@ -6,7 +6,7 @@ COPY build.gradle.kts ./build.gradle.kts
 RUN --mount=type=cache,target=./.gradle gradle clean build
 
 FROM openjdk:17-buster as backend
-COPY --from=builder /project/build/libs/*-all.jar /analyze.jar
-RUN echo "java -jar /analyze.jar \$@" > /usr/local/bin/analyze
-RUN chmod a+x /usr/local/bin/analyze
-ENTRYPOINT ["/analyze"]
+COPY --from=builder /project/build/libs/*-all.jar /kq.jar
+RUN echo "java -jar /kq.jar \$@" > /usr/local/bin/kq
+RUN chmod a+x /usr/local/bin/kq
+ENTRYPOINT ["/kq"]
