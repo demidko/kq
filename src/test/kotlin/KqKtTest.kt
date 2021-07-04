@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 import java.io.File
 
 
-class UtilityKtTest {
+class KqKtTest {
 
   private val ndjson =
     javaClass.getResource("/example.ndjson")!!

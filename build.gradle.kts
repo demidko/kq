@@ -25,7 +25,7 @@ tasks.test {
   useJUnitPlatform()
 }
 tasks.jar {
-  manifest.attributes("Main-Class" to "UtilityKt")
+  manifest.attributes("Main-Class" to "KqKt")
 }
 tasks.shadowJar {
   isZip64 = true
