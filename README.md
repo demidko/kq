@@ -147,5 +147,9 @@ postfix. Now you can run utility, for example:
 cat example.ndjson | ./kq-all 'where{bool("active")} top 10'
 ```
 
+## Roadmap
+
+1. jsr223 -> KEEP
+2. KEEP -> native-image
 
 
