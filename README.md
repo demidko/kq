@@ -10,12 +10,6 @@ cat ~/Desktop/bdb.ndjson | kq '.filter{it.bool("muted")}.sortedBy{it.long("size"
 
 1. You need [jvm16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.
 1. [Download release](https://github.com/demidko/kq/releases).
-1. Now you can run it, for example with `example.ndjson` file:
-   ```shell
-   java -jar kq.jar example.ndjson 'where{long("size") > 10} max{long("size")} select{int("id")}'
-   # or
-   cat example.ndjson | java -jar kq.jar 'where{long("size") > 10} max{long("size")} select{int("id")}'
-   ```
 1. On Unix you can create command `kq`:
    ```shell
    mv kq.jar /usr/local/bin/kq.jar
