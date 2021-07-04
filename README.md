@@ -10,22 +10,15 @@ cat ~/Desktop/bdb.ndjson | kq '.filter{it.bool("muted")}.sortedBy{it.long("size"
 
 1. You need [jvm16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.
 1. [Download release](https://github.com/demidko/kq/releases).
-1. On Unix you can create command `kq`:
-   ```shell
-   mv kq.jar /usr/local/bin/kq.jar
-   echo "java -jar /usr/local/bin/kq.jar \$@" > /usr/local/bin/kq
-   chmod a+x /usr/local/bin/kq
-   ``` 
-   On Windows use `java -jar kq`
 
 ## Examples
 
 ```shell
-kq file.ndsjon 'max {long("size")} top 3 where {bool("active")}'
-cat file.ndjson | kq 'top 5 where{!bool("active")} min{int("some")}'
-kq file.ndsjon 'top 5 min{between(time("first"), time("last"))}'
-cat file.ndjson | kq 'where { obj("arr").int(0) > 5 }'
-kq file.ndsjon 'where{!bool("broken")} top 3 min{ obj(4).obj("nested").bool("flag") }'
+java -jar kq file.ndsjon 'max {long("size")} top 3 where {bool("active")}'
+cat file.ndjson | java -jar kq 'top 5 where{!bool("active")} min{int("some")}'
+java -jar kq file.ndsjon 'top 5 min{between(time("first"), time("last"))}'
+cat file.ndjson | java -jar kq 'where { obj("arr").int(0) > 5 }'
+java -jar kq file.ndsjon 'where{!bool("broken")} top 3 min{ obj(4).obj("nested").bool("flag") }'
 ```
 
 ## Download with [Docker](https://www.docker.com/)
