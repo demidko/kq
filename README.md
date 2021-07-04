@@ -16,6 +16,7 @@ cat ~/Desktop/bdb.ndjson | kq '.filter{it.bool("muted")}.sortedBy{it.long("size"
    echo "java -jar /usr/local/bin/kq.jar \$@" > /usr/local/bin/kq
    chmod a+x /usr/local/bin/kq
    ``` 
+   On Windows use `java -jar kq`
 
 ## Examples
 
