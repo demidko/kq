@@ -4,11 +4,8 @@ import com.fasterxml.jackson.module.kotlin.jsonMapper
 import com.github.sisyphsu.dateparser.DateParserUtils.parseDateTime
 import javax.script.ScriptEngineManager
 
-infix fun <T> Sequence<T>.where(predicate: T.() -> Boolean) = filter(predicate)
-infix fun <T, R> Sequence<T>.select(transform: T.() -> R) = map(transform)
-infix fun <T, R : Comparable<R>> Sequence<T>.min(selector: T.() -> R?) = sortedBy(selector)
-infix fun <T, R : Comparable<R>> Sequence<T>.max(selector: T.() -> R?) = sortedByDescending(selector)
-infix fun <T> Sequence<T>.top(n: Int) = take(n)
+// client dsl
+
 infix fun JsonNode.text(field: String) = get(field).asText()
 infix fun JsonNode.text(field: Int) = get(field).asText()
 infix fun JsonNode.time(field: String) = parseDateTime(text(field))
@@ -24,6 +21,9 @@ infix fun JsonNode.bool(field: Int) = get(field).asBoolean()
 infix fun JsonNode.obj(field: Int) = get(field)
 infix fun JsonNode.obj(field: String) = get(field)
 
+// internal logic
+
+fun Number.forEach(action: (Number) -> Unit) = action(this)
 val json = jsonMapper { addModule(JavaTimeModule()) }
 
 fun String.eval(query: String) =
@@ -34,7 +34,7 @@ fun String.eval(query: String) =
       import java.util.*  
       import java.time.*
       import java.time.Duration.*
-      $this.useLines { (it.map(json::readTree) $query).forEach(::println)  }
+      $this.useLines { it.map(json::readTree).$query.forEach(::println)  }
       """
     )
 

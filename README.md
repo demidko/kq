@@ -1,62 +1,19 @@
 # Kq
 
-Modern cross-platform JSON processor with readable Kotlin syntax.
+Modern Docker JSON processor with readable Kotlin syntax.
+
+## Example
 
 ```shell
-cat ~/Desktop/bdb.ndjson | kq '.filter{it.bool("muted")}.sortedBy{it.long("size")}.take(7)'
-```
-
-## Download
-
-1. You need [jvm16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) installed.
-1. [Download release](https://github.com/demidko/kq/releases).
-
-## Examples
-
-```shell
-java -jar kq file.ndsjon 'max {long("size")} top 3 where {bool("active")}'
-cat file.ndjson | java -jar kq 'top 5 where{!bool("active")} min{int("some")}'
-java -jar kq file.ndsjon 'top 5 min{between(time("first"), time("last"))}'
-cat file.ndjson | java -jar kq 'where { obj("arr").int(0) > 5 }'
-java -jar kq file.ndsjon 'where{!bool("broken")} top 3 min{ obj(4).obj("nested").bool("flag") }'
-```
-
-## Download with [Docker](https://www.docker.com/)
-
-Start the container in current directory, for example, with `example.ndjson` file:
-
-```shell
-docker run -v `pwd`:`pwd` -w `pwd` -it --rm demidko/kq example.ndjson 'where{bool("active")} max{long("size")} top 10'
+ docker run -v `pwd`:`pwd` -w `pwd` -it --rm demidko/kq bdb.ndjson \
+ 'filter{ it.bool("muted") && between(it.time("firstActivity"), it.time("lastActivity")).toHours() >= 5 }.sumOf{ it.long("bytesCount") }'
 ```
 
 ## Documentation
 
-Any request contains control constructs and inline expressions.
-
-### Constructs
-
-You can use any Kotlin sequence extension and following infix extensions in any order:
-
-```kotlin
-/* Sequence containing only elements matching the given predicate expression. */
-where { /* expression */ }
-
-/* Sequence sorted according to natural sort order of the value returned by specified selector expression. */
-min { /* expression */ }
-
-/* Sequence sorted descending according to natural sort order of the value returned by specified selector expression. */
-max { /* expression */ }
-
-/* Sequence containing first n elements. */
-top(n)
-
-/* Sequence containing the results of applying the given transform expression to each element in the original sequence */
-select { /* expression */ }
-```
-
-### Expressions
-
-You can use any Kotlin expression and following functions:
+You can use
+any [Kotlin sequence extensions](https://kotlinlang.org/docs/sequences.html#sequence-operations)
+with additional json node expressions:
 
 ```kotlin
 /* Subnode of current json node */

@@ -2,11 +2,11 @@ repositories {
   mavenCentral()
 }
 plugins {
-  kotlin("jvm") version "1.5.20"
+  kotlin("jvm") version "1.5.30"
   id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 dependencies {
-  runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
+  runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.30")
   implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3")
   implementation("com.github.sisyphsu:dateparser:1.0.7")
