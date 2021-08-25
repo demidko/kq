@@ -5,7 +5,6 @@ import com.github.sisyphsu.dateparser.DateParserUtils.parseDateTime
 import javax.script.ScriptEngineManager
 
 // client dsl
-
 infix fun JsonNode.text(field: String) = get(field).asText()
 infix fun JsonNode.text(field: Int) = get(field).asText()
 infix fun JsonNode.time(field: String) = parseDateTime(text(field))
@@ -22,8 +21,6 @@ infix fun JsonNode.obj(field: Int) = get(field)
 infix fun JsonNode.obj(field: String) = get(field)
 
 // internal logic
-
-fun Number.forEach(action: (Number) -> Unit) = action(this)
 val json = jsonMapper { addModule(JavaTimeModule()) }
 
 fun String.eval(query: String) =
@@ -34,7 +31,7 @@ fun String.eval(query: String) =
       import java.util.*  
       import java.time.*
       import java.time.Duration.*
-      $this.useLines { it.map(json::readTree).$query.forEach(::println)  }
+      $this.useLines { it.map(json::readTree).$query }
       """
     )
 
