@@ -57,7 +57,7 @@ Your jar will be located at `./build/libs` with `-all.jar` postfix. Now you can 
 example:
 
 ```shell
-cat example.ndjson | java -jar kq-all.jar 'where{bool("active")} top 10'
+cat example.ndjson | java -jar kq-all.jar 'where{it.bool("active")}.take(10)'
 ```
 
 ### Build [Docker](https://www.docker.com/) image
@@ -71,7 +71,7 @@ docker build . -t kq
 Now you can run container, for example:
 
 ```shell
-docker run -v `pwd`:`pwd` -w `pwd` -it --rm kq example.ndjson 'where{bool("active")} top 10'
+docker run -v `pwd`:`pwd` -w `pwd` -it --rm kq example.ndjson 'filter{it.bool("active")}.take(10)'
 ```
 
 ### Build cross-platform utility with [GraalVM](https://www.graalvm.org/reference-manual/native-image/#install-native-image)
@@ -87,7 +87,7 @@ Your native utility without runtime dependencies will be located at current dire
 postfix. Now you can run utility, for example:
 
 ```shell
-cat example.ndjson | ./kq-all 'where{bool("active")} top 10'
+cat example.ndjson | ./kq-all 'filter{bool("active")}.take(10)'
 ```
 
 ## Roadmap
