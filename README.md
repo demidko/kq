@@ -2,7 +2,9 @@
 
 Modern Docker JSON processor with readable Kotlin syntax.
 
-## Example
+## Usage
+
+You need Docker installed:
 
 ```shell
  docker run -v `pwd`:`pwd` -w `pwd` -it --rm demidko/kq bdb.ndjson \
